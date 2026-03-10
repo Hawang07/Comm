@@ -41,7 +41,22 @@ USERS = {
     "Thanapon":"123456",
     "Charinthip":"123456",
     "Namoun":"123456",
-    "Areewan":"123456"
+    "Areewan":"123456",
+    "Maneewan":"0815914236",
+    "Kitti": "0972456459",
+    "Khanittha ":"0990834923",
+    "Darawan":"0929242899",
+    "Panisara":"0946592445",
+    "Kriangkrai":"0635199969",
+    "Sumintra ":"0949655693",
+    "Surachet":"0949644423",
+    "Jittra":"0963566592",
+    "Siriya": "0875569928",
+    "Namphueng":"0626965495",
+    "Wanwisa":"0886966512",
+    "Nathawat ":"0619295978",
+    "Kriangkrai":"0635199969",
+    "Khanittayada":"0971565697",
 }
 
 if "logged_in" not in st.session_state:
