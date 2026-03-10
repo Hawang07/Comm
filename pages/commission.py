@@ -65,7 +65,7 @@ def get_all_users():
     return pd.DataFrame()
 
 
-INACTIVITY_TIMEOUT_SECONDS = 5 * 60
+INACTIVITY_TIMEOUT_SECONDS = 10 * 60
 
 def update_last_activity():
     st.session_state.last_activity = time.time()
@@ -230,23 +230,23 @@ sim_choices = [
 ]
 
 selected_ranges = st.multiselect(
-    "เลือกเป้าหมาย",
+    "เลือกเป้าหมาย SIM",
     sim_choices,
     default=["5-19"],  # ตั้ง default ให้ช่องดูสมบูรณ์
     key="sim_multi"
 )
 
-st.subheader("💰 ใส่จำนวนตามช่วงราคา")
+st.subheader("💰 ใส่จำนวนตามช่วงราคา(AP1D)")
 price_cols = st.columns(4)
 price_inputs = {}
 with price_cols[0]:
-    price_inputs["200-249"] = st.number_input("200-249 บาท", min_value=0, value=0, step=1, key="price_200")
+    price_inputs["200-249"] = st.number_input("AP1D>200-249 บาท", min_value=0, value=0, step=1, key="price_200")
 with price_cols[1]:
-    price_inputs["250-299"] = st.number_input("250-299 บาท", min_value=0, value=0, step=1, key="price_250")
+    price_inputs["250-299"] = st.number_input("AP1D>250-299 บาท", min_value=0, value=0, step=1, key="price_250")
 with price_cols[2]:
-    price_inputs["300-349"] = st.number_input("300-349 บาท", min_value=0, value=0, step=1, key="price_300")
+    price_inputs["300-349"] = st.number_input("AP1D>300-349 บาท", min_value=0, value=0, step=1, key="price_300")
 with price_cols[3]:
-    price_inputs["350+"] = st.number_input("350+ บาท", min_value=0, value=0, step=1, key="price_350")
+    price_inputs["350+"] = st.number_input("AP1D>350+ บาท", min_value=0, value=0, step=1, key="price_350")
 
 st.divider()
 
@@ -478,23 +478,23 @@ point_ranges_corrected = {
 point_choices = ["5-20", "21-50", "51-100", "101-300", "300+"]  # แก้ "301>" เป็น "300+"
 
 selected_point_ranges = st.multiselect(
-    "เลือกเป้าหมาย",
+    "เลือกเป้าหมาย SIM",
     point_choices,
     default=["5-20"],
     key="point_multi"  # key ไม่ซ้ำ
 )
 
-st.subheader("💰 ใส่จำนวนตามช่วงราคา")
+st.subheader("💰 ใส่จำนวนตามช่วงราคา(AP1D)")
 point_cols = st.columns(4)
 point_inputs = {}
 with point_cols[0]:
-    point_inputs["150-199"] = st.number_input("150-199", min_value=0, value=0, step=1, key="point_price_150")
+    point_inputs["150-199"] = st.number_input("AP1D>150-199", min_value=0, value=0, step=1, key="point_price_150")
 with point_cols[1]:
-    point_inputs["200-249"] = st.number_input("200-249", min_value=0, value=0, step=1, key="point_price_200")
+    point_inputs["200-249"] = st.number_input("AP1D>200-249", min_value=0, value=0, step=1, key="point_price_200")
 with point_cols[2]:
-    point_inputs["250-299"] = st.number_input("250-299", min_value=0, value=0, step=1, key="point_price_250")
+    point_inputs["250-299"] = st.number_input("AP1D>250-299", min_value=0, value=0, step=1, key="point_price_250")
 with point_cols[3]:
-    point_inputs["300+"] = st.number_input("300+", min_value=0, value=0, step=1, key="point_price_300")
+    point_inputs["300+"] = st.number_input("AP1D>300+", min_value=0, value=0, step=1, key="point_price_300")
 
 
 # ✅ แก้ไข: ตัวแปรเฉพาะสำหรับ Point+ (ไม่ใช้ selected_ranges จาก Extra Commission)
