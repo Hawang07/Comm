@@ -4,6 +4,22 @@ import time
 import datetime
 import os
 
+# ใส่บรรทัดนี้ในไฟล์ main.py และ commission.py ทุกไฟล์
+
+hide_menu_style = """
+    <style>
+        #MainMenu {visibility: hidden;}
+        footer {visibility: hidden;}
+        #GithubIcon {visibility: hidden;}
+        header .css-1jc7ptx, 
+        .e1ewe7hr3, 
+        .viewerBadge_container__1QSob, 
+        .styles_viewerBadge__1yB5_ {display: none;}
+    </style>
+"""
+st.markdown(hide_menu_style, unsafe_allow_html=True)
+
+
 # ซ่อน sidebar navigation ทั้งหมด
 st.markdown("""
     <style>
