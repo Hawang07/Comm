@@ -1,6 +1,13 @@
 import streamlit as st
 import pandas as pd
 
+# โหลด CSS เดียวกัน
+def load_css(file_path):
+    with open(file_path) as f:
+        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+
+load_css('css/hide_github.css')  # ← ซ่อน GitHub แต่ sidebar แสดงปกติ
+
 # CSS ซ่อน sidebar + GitHub link (แก้ไขแล้ว)
 st.markdown("""
     <style>
