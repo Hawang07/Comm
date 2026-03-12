@@ -4,29 +4,23 @@ import time
 import datetime
 import os
 
-# ซ่อน sidebar navigation + GitHub ทุกหน้า
+# แทนที่ CSS เดิมด้วยอันนี้
 st.markdown("""
     <style>
-        /* ซ่อน sidebar navigation (เดิม) */
-        .css-1d391kg {
-            display: none !important;
-        }
-        .css-1v3f3lc {
-            display: none !important;
-        }
-        [data-testid="stSidebarNav"] {
-            display: none !important;
-        }
-        
-        /* ✅ เพิ่มส่วนนี้ - ซ่อน GitHub + Menu ทุกหน้า */
+        /* ซ่อนเฉพาะ GitHub + MainMenu ไว้ Share/Settings */
         #MainMenu {visibility: hidden;}
-        footer {visibility: hidden;}
         #GithubIcon {visibility: hidden;}
-        header .css-1jc7ptx, 
-        .e1ewe7hr3, 
-        .viewerBadge_container__1QSob, 
-        .styles_viewerBadge__1yB5_ {display: none;}
-        button[kind="header"] { display: none !important; }
+        footer {visibility: hidden;}
+        
+        /* เก็บ Share/Settings button */
+        .viewerBadge_container__1QSob,
+        .styles_viewerBadge__1yB5_,
+        header .css-1jc7ptx {display: none;}
+        
+        /* ซ่อน sidebar navigation (เดิม) */
+        .css-1d391kg {display: none !important;}
+        .css-1v3f3lc {display: none !important;}
+        [data-testid="stSidebarNav"] {display: none !important;}
     </style>
 """, unsafe_allow_html=True)
 
