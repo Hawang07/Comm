@@ -7,15 +7,19 @@ import os
 # แทนที่ CSS เดิมด้วยอันนี้
 st.markdown("""
     <style>
-        /* ซ่อนเฉพาะ GitHub + MainMenu ไว้ Share/Settings */
+        /* ซ่อนทุกเมนู ยกเว้น Share button */
         #MainMenu {visibility: hidden;}
         #GithubIcon {visibility: hidden;}
         footer {visibility: hidden;}
+        button[kind="header"] {display: none !important;}
         
-        /* เก็บ Share/Settings button */
-        .viewerBadge_container__1QSob,
-        .styles_viewerBadge__1yB5_,
-        header .css-1jc7ptx {display: none;}
+        /* เก็บเฉพาะ Share button */
+        .stDeployButton p {
+            display: block !important;
+        }
+        .stDeployButton {
+            display: block !important;
+        }
         
         /* ซ่อน sidebar navigation (เดิม) */
         .css-1d391kg {display: none !important;}
@@ -23,6 +27,7 @@ st.markdown("""
         [data-testid="stSidebarNav"] {display: none !important;}
     </style>
 """, unsafe_allow_html=True)
+
 
 st.set_page_config(initial_sidebar_state="collapsed")
 
