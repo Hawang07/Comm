@@ -40,7 +40,7 @@ def log_user_login(username):
     else:
         df = pd.DataFrame(columns=["วันที่", "ผู้ใช้"])
     
-    # เช็คว่ามีการ login ซ้ำใน 5 นาทีล่าสุดหรือไม่
+    # เช็คว่ามีการ login ซ้ำใน 10 นาทีล่าสุดหรือไม่
     now = datetime.datetime.now()
     recent = df[
         (df["ผู้ใช้"] == username) & 
@@ -84,17 +84,18 @@ if "logged_in" in st.session_state and st.session_state.logged_in:
 if "last_activity" not in st.session_state:
     st.session_state.last_activity = time.time()
 
-# ถ้าไม่มีกิจกรรม 3 นาที ให้ล็อกเอาต์อัตโนมัติ
+# ถ้าไม่มีกิจกรรม 10 นาที ให้ล็อกเอาต์อัตโนมัติ
 if is_timed_out():
     st.session_state.logged_in = False
     st.session_state.username = None
     st.session_state.clear()
-    st.info("⚠️ หมดเวลาไม่มีการใช้งาน 3 นาที กรุณาล็อกอินใหม่")
+    st.info("⚠️ หมดเวลาไม่มีการใช้งาน 10 นาที กรุณาล็อกอินใหม่")
     time.sleep(1)
     st.switch_page("main.py")
 
-if "logged_in" not in st.session_state or not st.session_state.logged_in:
-    st.switch_page("main.py")
+if not st.session_state.get("logged_in", False):
+    st.warning("⚠️ กรุณาล็อกอินก่อนใช้งาน")
+    st.stop()  # หยุดการรัน ไม่ให้ไปต่อ
 
 
 st.title("💰Commission_Campaign")
@@ -244,9 +245,9 @@ with price_cols[0]:
 with price_cols[1]:
     price_inputs["250-299"] = st.number_input("AP1D>250-299 บาท", min_value=0, value=0, step=1, key="price_250")
 with price_cols[2]:
-    price_inputs["300-349"] = st.number_input("AP1D>300-349 บาท", min_value=0, value=0, step=1, key="price_300")
+    price_inputs["300-349"] = st.number_input("AP1D300-349 บาท", min_value=0, value=0, step=1, key="price_300")
 with price_cols[3]:
-    price_inputs["350+"] = st.number_input("AP1D>350+ บาท", min_value=0, value=0, step=1, key="price_350")
+    price_inputs["350+"] = st.number_input("AP1D350+ บาท", min_value=0, value=0, step=1, key="price_350")
 
 st.divider()
 
@@ -492,9 +493,9 @@ with point_cols[0]:
 with point_cols[1]:
     point_inputs["200-249"] = st.number_input("AP1D>200-249", min_value=0, value=0, step=1, key="point_price_200")
 with point_cols[2]:
-    point_inputs["250-299"] = st.number_input("AP1D>250-299", min_value=0, value=0, step=1, key="point_price_250")
+    point_inputs["250-299"] = st.number_input("AP1D250-299", min_value=0, value=0, step=1, key="point_price_250")
 with point_cols[3]:
-    point_inputs["300+"] = st.number_input("AP1D>300+", min_value=0, value=0, step=1, key="point_price_300")
+    point_inputs["300+"] = st.number_input("AP1D300+", min_value=0, value=0, step=1, key="point_price_300")
 
 
 # ✅ แก้ไข: ตัวแปรเฉพาะสำหรับ Point+ (ไม่ใช้ selected_ranges จาก Extra Commission)
@@ -533,41 +534,119 @@ if results_point:
     col1.metric("SIM ขายจริง", f"{total_actual_sim:,} SIM")
     col3.metric("รวมแต้ม", f"{total_points:,.0f} POINT")
 
-  
+st.divider()
+
+st.subheader("🏪>MOU")
+
+# Rates สำหรับแต่ละเป้าหมาย
+rate_commission1 = {
+    "200-299": 25,
+    "300-399": 30,
+    "400-499": 35,
+    ">500": 40
+}
+
+rate_commission3 = {
+    "600-899": 25,
+    "900-1199": 30,
+    "1200-1499": 35,
+    ">1500": 40
+}
+
+choice_sim = st.selectbox("เลือกเป้าหมาย",
+                          ("1 MONTH", "3 MONTH"),
+                          index=1,
+                          key="choice_sim")
+
+# Dynamic options และ rates
+if choice_sim == "1 MONTH":
+    sim_options = ["200-299", "300-399", "400-499", ">500"]
+    rates = rate_commission1
+    default_sim = ["200-299"]
+else:
+    sim_options = ["600-899", "900-1199", "1200-1499", ">1500"]
+    rates = rate_commission3
+    default_sim = ["600-899"]
+
+select_range = st.multiselect(
+    "เลือกเป้าหมาย SIM",
+    sim_options,
+    default=default_sim,
+    key="sim"
+)
 
 st.divider()
 
-if st.button("🗑️ เคลียร์ข้อมูลทั้งหมด"):
-    # เพิ่ม "point_price_" ใน list
-    to_delete = [
-        k for k in st.session_state.keys()
-        if (
-            k.startswith("input_") or
-            k.startswith("sim_") or
-            k.startswith("price_") or
-            k.startswith("point_price_") or  # ← เพิ่มบรรทัดนี้
-            k.startswith("input_student") or
-            k.startswith("input_tvs") or
-            k.startswith("point_input")  # เก็บไว้เผื่อใช้
+# แสดงผลที่เลือก
+col10, col20 = st.columns(2)
+with col10:
+    st.subheader(f"เป้าหมาย:red[ {choice_sim}]")
+with col20:
+    st.subheader(f"ช่วง SIM:red[ {', '.join(select_range) if select_range else 'ไม่มี'}]")
+
+st.divider()
+
+# คำนวณ commission
+if select_range:
+    col1, col2 = st.columns([2, 1])
+    with col1:
+        # Default ตาม choice_sim
+        default_count = 600 if choice_sim == "3 MONTH" else 200
+        
+        sim_count = st.number_input(
+            "จำนวน SIM ทั้งหมด", 
+            min_value=0, 
+            value=default_count,  # ← เปลี่ยนตรงนี้
+            key="sim_count"
         )
+
+    with col2:
+        st.info("**อัตรา/ช่วง:**")
+        for sim in select_range:
+            st.caption(f"{sim}:red[ {rates[sim]} บ/:ซิม]")
+    
+    # คำนวณจริงด้วย rates
+    commission_per_range = {sim: rates[sim] * sim_count for sim in select_range}
+    total_commission = sum(commission_per_range.values())
+    
+    # แสดงตาราง breakdown
+    df_breakdown = pd.DataFrame(list(commission_per_range.items()), columns=["ช่วง SIM", "คอมรวม"])
+    st.dataframe(df_breakdown, width="stretch",hide_index=True)
+    
+    st.metric("คอมมิชชั่นรวม", f"{total_commission:,.0f} บาท")
+    
+else:
+    st.warning("กรุณาเลือกช่วง SIM")
+
+
+st.divider()
+
+if st.button("🗑️ เคลียร์ข้อมูลทั้งหมด", use_container_width=True):
+    # Clear ทุก input ในแอป
+    prefixes_to_clear = [
+        "input_", "sim_", "price_", "point_price_", "input_student", 
+        "input_tvs", "input_basic", "input_flash", "point_input",
+        "choice_sim", "sim_multi", "point_multi"  # ✅ เพิ่ม MOU keys
     ]
     
-    for k in to_delete:
-        del st.session_state[k]
-
-    # ล้างค่า commission ต่าง ๆ
-    for total_key in [
+    for key in list(st.session_state.keys()):
+        if any(prefix in key for prefix in prefixes_to_clear):
+            del st.session_state[key]
+    
+    # Reset ค่า total ทุกตัว
+    totals_to_reset = [
         "total_commission", "total_commission_student", "total_commission_tvs",
-        "total_commission_basic", "total_commission_flash",
-        "total_points"  # เพิ่ม total_points
-    ]:
-        if total_key in st.session_state:
-            st.session_state[total_key] = 0
-
+        "total_commission_basic", "total_commission_flash", "total_points"
+    ]
+    for total_key in totals_to_reset:
+        st.session_state[total_key] = 0
+    
+    st.success("✅ เคลียร์ข้อมูลทั้งหมดเรียบร้อย!")
     st.rerun()
 
 
 
+st.divider()
 
 st.sidebar.title("👥")
 
