@@ -4,27 +4,29 @@ import time
 import datetime
 import os
 
-# โหลด CSS เดียวกัน
-def load_css(file_path):
-    with open(file_path) as f:
-        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
-
-load_css('css/hide_github.css')  # ← ซ่อน GitHub แต่ sidebar แสดงปกติ
-# ซ่อน sidebar navigation ทั้งหมด
+# ซ่อน sidebar navigation + GitHub ทุกหน้า
 st.markdown("""
     <style>
-        /* ซ่อน sidebar navigation */
+        /* ซ่อน sidebar navigation (เดิม) */
         .css-1d391kg {
             display: none !important;
         }
-        /* ซ่อน page links ใน sidebar */
         .css-1v3f3lc {
             display: none !important;
         }
-        /* ซ่อน header main/commission */
         [data-testid="stSidebarNav"] {
             display: none !important;
         }
+        
+        /* ✅ เพิ่มส่วนนี้ - ซ่อน GitHub + Menu ทุกหน้า */
+        #MainMenu {visibility: hidden;}
+        footer {visibility: hidden;}
+        #GithubIcon {visibility: hidden;}
+        header .css-1jc7ptx, 
+        .e1ewe7hr3, 
+        .viewerBadge_container__1QSob, 
+        .styles_viewerBadge__1yB5_ {display: none;}
+        button[kind="header"] { display: none !important; }
     </style>
 """, unsafe_allow_html=True)
 
