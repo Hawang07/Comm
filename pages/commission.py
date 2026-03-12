@@ -4,11 +4,29 @@ import time
 import datetime
 import os
 
+# ซ่อน sidebar navigation + GitHub ทุกหน้า
 st.markdown("""
     <style>
-        #GithubIcon {visibility: hidden !important;}
-        #MainMenu {visibility: hidden !important;}
-        footer {visibility: hidden !important;}
+        /* ซ่อน sidebar navigation (เดิม) */
+        .css-1d391kg {
+            display: none !important;
+        }
+        .css-1v3f3lc {
+            display: none !important;
+        }
+        [data-testid="stSidebarNav"] {
+            display: none !important;
+        }
+        
+        /* ✅ เพิ่มส่วนนี้ - ซ่อน GitHub + Menu ทุกหน้า */
+        #MainMenu {visibility: hidden;}
+        footer {visibility: hidden;}
+        #GithubIcon {visibility: hidden;}
+        header .css-1jc7ptx, 
+        .e1ewe7hr3, 
+        .viewerBadge_container__1QSob, 
+        .styles_viewerBadge__1yB5_ {display: none;}
+        button[kind="header"] { display: none !important; }
     </style>
 """, unsafe_allow_html=True)
 
