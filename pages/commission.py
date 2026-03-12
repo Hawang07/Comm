@@ -4,26 +4,6 @@ import time
 import datetime
 import os
 
-st.markdown("""
-    <style>
-        /* ซ่อนเมนูทั้งหมด */
-        #MainMenu {visibility: hidden;}
-        footer {visibility: hidden;}
-        button[kind="header"] {display: none !important;}
-        
-        /* ✅ แสดงเฉพาะ Share button */
-        div.element-container [data-testid="stDeployButton"] {
-            display: block !important;
-        }
-        div.element-container .stDeployButton {
-            display: block !important;
-        }
-        
-        /* ซ่อน sidebar nav เดิม */
-        [data-testid="stSidebarNav"] {display: none !important;}
-    </style>
-""", unsafe_allow_html=True)
-
 
 
 st.set_page_config(initial_sidebar_state="collapsed")
