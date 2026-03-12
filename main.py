@@ -57,6 +57,15 @@ USERS = {
     "Nathawat ":"0619295978",
     "Kriangkrai":"0635199969",
     "Khanittayada":"0971565697",
+    "Narin":"0925495655",
+    "Thawatchai":"0925495655",
+    "Jiraporn":"0868293697",
+    "Ponphan":"0822282526",
+    "Chatphat": "0814536195",
+    "Chalothon":"0993619241",
+    "Preecha":"0993619241",
+    "Waruth ":"0952464692",
+    "Natthawat":"0959199455",
 }
 
 if "logged_in" not in st.session_state:
