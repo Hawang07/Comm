@@ -4,22 +4,12 @@ import time
 import datetime
 import os
 
-# ใส่บรรทัดนี้ในไฟล์ main.py และ commission.py ทุกไฟล์
+# โหลด CSS เดียวกัน
+def load_css(file_path):
+    with open(file_path) as f:
+        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
-hide_menu_style = """
-    <style>
-        #MainMenu {visibility: hidden;}
-        footer {visibility: hidden;}
-        #GithubIcon {visibility: hidden;}
-        header .css-1jc7ptx, 
-        .e1ewe7hr3, 
-        .viewerBadge_container__1QSob, 
-        .styles_viewerBadge__1yB5_ {display: none;}
-    </style>
-"""
-st.markdown(hide_menu_style, unsafe_allow_html=True)
-
-
+load_css('css/hide_github.css')  # ← ซ่อน GitHub แต่ sidebar แสดงปกติ
 # ซ่อน sidebar navigation ทั้งหมด
 st.markdown("""
     <style>
