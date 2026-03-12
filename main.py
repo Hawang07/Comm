@@ -1,30 +1,35 @@
 import streamlit as st
 import pandas as pd
 
-# ซ่อน sidebar ในหน้านี้เท่านั้น (ย้ายขึ้นมาบนสุด)
+# CSS ซ่อน sidebar + GitHub link (แก้ไขแล้ว)
 st.markdown("""
     <style>
         /* ซ่อน sidebar ทั้งหมด */
         section[data-testid="stSidebar"] { 
             display: none !important; 
         }
-        /* ซ่อน navigation links */
         [data-testid="stSidebarNav"] { 
             display: none !important; 
         }
-        /* ซ่อน page menu */
         div[data-testid="stSidebarNav"] > div { 
             display: none !important; 
         }
-        /*:ซ่อน GitHub sour code link*/
-        div[title*="View source" a,
-        a[href*="github.com"],
-        .appview-container a[href*="github"],
+        
+        /* ซ่อน GitHub source code link + Menu */
+        #MainMenu { visibility: hidden !important; }
+        #GithubIcon { visibility: hidden !important; }
         button[kind="header"] { display: none !important; }
+        footer { visibility: hidden !important; }
+        header .css-1jc7ptx, 
+        .e1ewe7hr3, 
+        .viewerBadge_container__1QSob, 
+        .styles_viewerBadge__1yB5_ { 
+            display: none !important; 
+        }
     </style>
 """, unsafe_allow_html=True)
 
-# ตั้งค่า page config (ต้องก่อน content อื่นๆ)
+# ตั้งค่า page config
 st.set_page_config(
     page_title="Commission",
     page_icon="💎",
@@ -32,7 +37,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Users dictionary
+# Users dictionary (แก้ไขชื่อซ้ำ)
 USERS = {
     "admin": "123456*",
     "Somwang": "0944542994",
@@ -58,17 +63,17 @@ USERS = {
     "Nathawat": "0619295978",
     "Khanittayada": "0971565697",
     "Narin": "0925495655",
-    "Thawatchai": "0925495655",
+    "Thawatchai": "0925495656",  # แก้ไม่ซ้ำ
     "Jiraporn": "0868293697",
     "Ponphan": "0822282526",
     "Chatphat": "0814536195",
     "Chalothon": "0993619241",
-    "Preecha": "0993619241",
+    "Preecha": "0993619242",     # แก้ไม่ซ้ำ
     "Waruth": "0952464692",
     "Natthawat": "0959199455",
 }
 
-# Session state initialization
+# Session state
 if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
 if "username" not in st.session_state:
@@ -94,16 +99,16 @@ if not st.session_state.logged_in:
                 st.info("💡 กรุณาตรวจสอบอีกครั้ง")
 
 else:
-    # แสดงหน้า dashboard สั้นๆ ก่อน switch page
     st.title(f"💎 สวัสดี {st.session_state.username}")
     st.success("✅ เข้าสู่ระบบสำเร็จ!")
     
-    # Switch ไปหน้า commission
-    if st.button("📊 ไปที่ Commission Dashboard", type="primary"):
-        st.switch_page("pages/commission.py")
-    
-    # Logout button (แสดงใน main page)
-    if st.button("🚪 ออกจากระบบ", type="secondary"):
-        st.session_state.logged_in = False
-        st.session_state.username = None
-        st.rerun()
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("📊 Commission Dashboard", type="primary", use_container_width=True):
+            st.switch_page("pages/commission.py")
+    with col2:
+        if st.button("🚪 ออกจากระบบ", type="secondary", use_container_width=True):
+            # Clear all session state
+            for key in list(st.session_state.keys()):
+                del st.session_state[key]
+            st.rerun()
