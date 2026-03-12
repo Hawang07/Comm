@@ -4,7 +4,13 @@ import time
 import datetime
 import os
 
-
+st.markdown("""
+    <style>
+        #GithubIcon {visibility: hidden !important;}
+        #MainMenu {visibility: hidden !important;}
+        footer {visibility: hidden !important;}
+    </style>
+""", unsafe_allow_html=True)
 
 st.set_page_config(initial_sidebar_state="collapsed")
 
