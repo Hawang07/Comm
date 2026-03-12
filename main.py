@@ -8,33 +8,6 @@ def load_css(file_path):
 
 load_css('css/hide_github.css')  # ← ซ่อน GitHub แต่ sidebar แสดงปกติ
 
-# CSS ซ่อน sidebar + GitHub link (แก้ไขแล้ว)
-st.markdown("""
-    <style>
-        /* ซ่อน sidebar ทั้งหมด */
-        section[data-testid="stSidebar"] { 
-            display: none !important; 
-        }
-        [data-testid="stSidebarNav"] { 
-            display: none !important; 
-        }
-        div[data-testid="stSidebarNav"] > div { 
-            display: none !important; 
-        }
-        
-        /* ซ่อน GitHub source code link + Menu */
-        #MainMenu { visibility: hidden !important; }
-        #GithubIcon { visibility: hidden !important; }
-        button[kind="header"] { display: none !important; }
-        footer { visibility: hidden !important; }
-        header .css-1jc7ptx, 
-        .e1ewe7hr3, 
-        .viewerBadge_container__1QSob, 
-        .styles_viewerBadge__1yB5_ { 
-            display: none !important; 
-        }
-    </style>
-""", unsafe_allow_html=True)
 
 # ตั้งค่า page config
 st.set_page_config(
