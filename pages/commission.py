@@ -4,29 +4,26 @@ import time
 import datetime
 import os
 
-# แทนที่ CSS เดิมด้วยอันนี้
 st.markdown("""
     <style>
-        /* ซ่อนทุกเมนู ยกเว้น Share button */
+        /* ซ่อนเมนูทั้งหมด */
         #MainMenu {visibility: hidden;}
-        #GithubIcon {visibility: hidden;}
         footer {visibility: hidden;}
         button[kind="header"] {display: none !important;}
         
-        /* เก็บเฉพาะ Share button */
-        .stDeployButton p {
+        /* ✅ แสดงเฉพาะ Share button */
+        div.element-container [data-testid="stDeployButton"] {
             display: block !important;
         }
-        .stDeployButton {
+        div.element-container .stDeployButton {
             display: block !important;
         }
         
-        /* ซ่อน sidebar navigation (เดิม) */
-        .css-1d391kg {display: none !important;}
-        .css-1v3f3lc {display: none !important;}
+        /* ซ่อน sidebar nav เดิม */
         [data-testid="stSidebarNav"] {display: none !important;}
     </style>
 """, unsafe_allow_html=True)
+
 
 
 st.set_page_config(initial_sidebar_state="collapsed")
