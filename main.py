@@ -16,6 +16,11 @@ st.markdown("""
         div[data-testid="stSidebarNav"] > div { 
             display: none !important; 
         }
+        /*:ซ่อน GitHub sour code link*/
+        div[title*="View source" a,
+        a[href*="github.com"],
+        .appview-container a[href*="github"],
+        button[kind="header"] { display: none !important; }
     </style>
 """, unsafe_allow_html=True)
 
