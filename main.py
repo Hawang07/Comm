@@ -72,7 +72,7 @@ USERS = {
     "Waruth": "0952464692",
     "Natthawat": "0959199455",
     "Suriphon":"0966942642",
-    "preecha":"0816554223",
+    "Preecha":"0816554223",
     "Suriphon":"0966942642"
 }
 
