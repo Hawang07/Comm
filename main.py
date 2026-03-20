@@ -73,7 +73,13 @@ USERS = {
     "Natthawat": "0959199455",
     "Suriphon":"0966942642",
     "Preecha":"0816554223",
-    "Suriphon":"0966942642"
+    "Suriphon":"0966942642",
+    "Settawut":"0966695936", 
+    "Lanlanin":"0802896166", 
+    "Panitta":"0814223613", 
+    "Tanpisit":"0633263632", 
+    "Somsak":"0805456926", 
+    "Wimada":"081555948",
 }
 
 # Session state
