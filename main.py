@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 
 # CSS ซ่อน sidebar + GitHub link (แก้ไขแล้ว)
-st.markdown("""
+"""st.markdown("""
     <style>
         /* ซ่อน sidebar ทั้งหมด */
         section[data-testid="stSidebar"] { 
@@ -27,7 +27,7 @@ st.markdown("""
             display: none !important; 
         }
     </style>
-""", unsafe_allow_html=True)
+""", unsafe_allow_html=True)"""
 
 # ตั้งค่า page config
 st.set_page_config(
