@@ -215,7 +215,6 @@ def get_commission_rate(sim_count, price_category):
 st.subheader("2. 🏪 Extra Commission")
 
 price_inputs = {
-    "200-249": 0,
     "250-299": 0,
     "300-349": 0,
     "350+": 0
@@ -224,7 +223,6 @@ price_inputs = {
 
 # Mapping ช่วง SIM → ค่าใช้คำนวณอัตรา (เหมือนเดิม)
 sim_ranges = {
-    "5-19": 12,
     "20-29": 25,
     "30-89": 50,
     "90-199": 120,
@@ -235,26 +233,24 @@ sim_ranges = {
 
 # ตัวเลือกช่วง
 sim_choices = [
-    "5-19", "20-29", "30-89", "90-199", "200-499", "500-899", "900+"
+    "20-29", "30-89", "90-199", "200-499", "500-899", "900+"
 ]
 
 selected_ranges = st.multiselect(
     "เลือกเป้าหมาย SIM",
     sim_choices,
-    default=["5-19"],  # ตั้ง default ให้ช่องดูสมบูรณ์
+    default=["20-29"],  # ตั้ง default ให้ช่องดูสมบูรณ์
     key="sim_multi"
 )
 
 st.subheader("💰 ใส่จำนวนตามช่วงราคา(AP1D)")
-price_cols = st.columns(4)
+price_cols = st.columns(3)
 price_inputs = {}
 with price_cols[0]:
-    price_inputs["200-249"] = st.number_input("AP1D>200-249 บาท", min_value=0, value=0, step=1, key="price_200")
-with price_cols[1]:
     price_inputs["250-299"] = st.number_input("AP1D>250-299 บาท", min_value=0, value=0, step=1, key="price_250")
-with price_cols[2]:
+with price_cols[1]:
     price_inputs["300-349"] = st.number_input("AP1D300-349 บาท", min_value=0, value=0, step=1, key="price_300")
-with price_cols[3]:
+with price_cols[2]:
     price_inputs["350+"] = st.number_input("AP1D350+ บาท", min_value=0, value=0, step=1, key="price_350")
 
 st.divider()
@@ -285,10 +281,9 @@ for selected in selected_ranges:
 # แสดงผลตาราง
 if results_extra:
     df_general = pd.DataFrame(results_extra)
-    st.dataframe(df_general, width="stretch", hide_index=True)
+    st.dataframe(df_general, use_container_width=True, hide_index=True)
 else:
     st.warning("⚠️ กรุณาเลือกช่วงปริมาณ SIM และกรอกจำนวนช่วงราคาเพื่อคำนวณ")
-
 
 st.divider()
 
